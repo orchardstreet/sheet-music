@@ -2,21 +2,16 @@
 
 \header {
   title = "Lasta"
-  composer = "William M. Lupinacci"
+  composer = "William Lupinacci"
 }
 
 % --- NEW: Layout and Page Formatting ---
 \paper {
-  % Gives the margins some breathing room
   top-margin = 15\mm
   bottom-margin = 15\mm
   left-margin = 15\mm
   right-margin = 15\mm
-  
-  % Increases the vertical distance between the left and right hand staves slightly
   score-system-spacing.basic-distance = #12
-  
-  % Increases the vertical distance between different lines of music
   system-system-spacing.basic-distance = #18
 }
 
@@ -24,172 +19,276 @@ rightHand = {
   \clef treble
   \time 4/4
   
-  % SECTION 1: Descent
+  % --- UNLOCK FULL MIDI DYNAMIC RANGE ---
+  \set Score.midiMinimumVolume = #0.2
+  \set Score.midiMaximumVolume = #1.0
+  
+  % --- SECTION 1: CREEPY ---
+  \set Staff.instrumentName = #"Trumpet"
+  \set Staff.shortInstrumentName = #"Trp."
+  
+  % Bar 1: Open Trumpet, NO volume tricks (100% ceiling)
+  \set Staff.midiInstrument = #"trumpet"
+  \set Staff.midiMaximumVolume = #1.0
+  \set Staff.midiMinimumVolume = #0.2
+  
   \tempo "Creepy" 4 = 90
-  % Starts at maximum volume (\ffff) and decrescendos (\>) down to \mf
-  <c'~ e'~ gis'>4\ffff\>\sustainOn <c' e'~ g'~>4 <b e'~ g'>4 <bes e'>4\mf\sustainOff |
   
-  % Ascent
-  % Legato slur connecting the high A to the lower A: a'4( a4)
-  % Builds from that \mf with a crescendo (\<) to \ffff on the fermata
-  a'4\<( a4)~ <a c'>4~ <a c' ees'>4~ |
-  <a c' ees' g'>1\fermata\ffff | 
+  % Bar 1: Trumpet line now descends to the lower E (e')
+  gis'4\mp\staccato\marcato^\markup { \box \bold "Open Trumpet" } g'2 e'4 |
   
-  % =====================================================================
-  \break % --- FORCED LINE BREAK 1: Puts the first 3 bars on their own line
-  % =====================================================================
+  % Bar 2: Mute goes IN! Drop the ceiling to 50%
+  \set Staff.midiInstrument = #"muted trumpet"
+  \set Staff.midiMaximumVolume = #0.5
+  \set Staff.midiMinimumVolume = #0.0
   
-  % --- COMBINED BARS 4 & 5 (Now 6/4 Time) ---
-  % 6-beat measure to un-cramp the run and cut the dead space at the end
-  \time 6/4
-  % =====================================================================
-  % The 16th note run is tripled in octaves, starting pianissimo (\pp) for a massive dynamic contrast
-  <f' f'' f'''>8\pp\staccatissimo <f f' f''>8\tenuto <g' g'' g'''>8\staccatissimo 
-  <bes bes' bes''>16\tenuto( <c' c'' c'''>16\staccato) <e' e'' e'''>16\tenuto( <f' f'' f'''>16\staccato) 
-  <des' des'' des'''>16\tenuto( <d' d'' d'''>16\staccato) <f' f'' f'''>16\portato <e' e'' e'''>16\portato 
+  a'4\mp\staccato\marcato^\markup { \box \bold "Muted Trumpet" } a4( c'4 ees'4) |
   
-  % 'print' tag uses the abbreviated text to save horizontal space
-  \tag #'print {
-    <g' g'' g'''>16^\markup { \bold \italic "poco a poco rit." }\< <c' c'' c'''>16 
-    <bes bes' bes''>16 <g g' g''>16\f r8 r4 |
-  }
-  % 'midi' tag progressively stair-steps the tempo down for EACH individual note
-  \tag #'midi {
-    \tempo 4 = 85 <g' g'' g'''>16\<
-    \tempo 4 = 70 <c' c'' c'''>16 
-    \tempo 4 = 55 <bes bes' bes''>16
-    \tempo 4 = 40 <g g' g''>16\f 
-    \tempo 4 = 90 % Snaps back to 90 for the rests
-    r8 r4 |
-  }
-  % =====================================================================
+  % Bar 3
+  g'1\fermata\mp | 
   
-  % =====================================================================
-  \break % --- FORCED LINE BREAK 2: Gives 6/4 run its own dedicated line
-  % =====================================================================
+  \break % --- FORCED LINE BREAK 1 ---
   
-  % --- PRE-FUNKY BASS PICKUP (2 Bars) ---
+  % --- SECTION 1B: TRUMPET + DX7 SWEEP (BAR 4) ---
+  \time 5/4
+  \ottava #1
+  
+  % Mute comes OUT! Switch back to Open Trumpet, capped at 70%
+  \set Staff.midiInstrument = #"trumpet"
+  \set Staff.midiMaximumVolume = #0.7
+  \set Staff.midiMinimumVolume = #0.0
+  
+  <<
+    {
+      f''8\ppp\staccatissimo\marcato^\markup { \box \bold "Open Trumpet 1 + DX7" } f'8\tenuto\marcato g''8\staccatissimo\marcato 
+      bes'16\tenuto( c''16\staccato) e''16\tenuto( f''16\staccato) 
+      des''16\tenuto( d''16\staccato) f''16\staccato e''16\staccato 
+      
+      \tag #'print {
+        g''16\staccato^\markup { \bold \italic "poco a poco rit." } c''16\staccato 
+        bes'16\staccato g'16\staccato r8 |
+      }
+      \tag #'midi {
+        \tempo 4 = 85 g''16\staccato
+        \tempo 4 = 70 c''16\staccato 
+        \tempo 4 = 55 bes'16\staccato
+        \tempo 4 = 40 g'16\staccato
+        \tempo 4 = 90 r8 |
+      }
+    }
+    \tag #'midi {
+      \new Staff {
+        \set Staff.midiInstrument = #"electric piano 2"
+        % MAGIC: Cap hidden DX7 volume to 70%
+        \set Staff.midiMaximumVolume = #0.7
+        \set Staff.midiMinimumVolume = #0.0
+        
+        f''8\ppp\staccatissimo\marcato f'8\tenuto\marcato g''8\staccatissimo\marcato 
+        bes'16\tenuto( c''16\staccato) e''16\tenuto( f''16\staccato) 
+        des''16\tenuto( d''16\staccato) f''16\staccato e''16\staccato 
+        g''16\staccato c''16\staccato bes'16\staccato g'16\staccato r8 |
+      }
+    }
+  >>
+  
+  \ottava #0
+  \break % --- FORCED LINE BREAK 2 ---
+  
+  % --- SECTION 2: FUNKY ---
   \time 4/4
-  % Tempo shifts to 125 BPM here, the word "Funky" is saved for the groove
-  \tempo 4 = 125 
-  % Bar 1 (Visually Bar 5): F holds through beat 2. B-flat, G, and the final F stack and tie forward.
-  f'4\f~ <bes~ f'>4 <bes~ g'~>4 <bes f' g'>4~ | 
+  \set Staff.shortInstrumentName = #"Rho."
+  \set Staff.midiInstrument = #"electric piano 1"
   
-  % Bar 2 (Visually Bar 6): 
-  % The crescendo starts on beat 1, but the \! on the s4 forces it to stop 
-  % a beat early, pulling it back from the right edge of the measure
+  % MAGIC: Restore Rhodes back to full 100% volume
+  \set Staff.midiMaximumVolume = #1.0
+  \set Staff.midiMinimumVolume = #0.2
+  
+  \tempo "Funky" 4 = 125 
+  f'4\ff^\markup { \box \bold "Rhodes" }~ <bes~ f'>4 <bes~ g'~>4 <bes f' g'>4~ | 
   << { <bes f' g'>1 } { s2.\< s4\! } >> | 
 
-  % SECTION 2: The Groove
-  % Looping the last four measures 2 times total (1 initial play + 1 repeat)
   \repeat volta 2 {
-    % =====================================================================
-    % Measure 1 (The 4th to last bar of the song)
-    \tempo "Funky"
-    % Melody doubled in octaves! A, G, D (descending)
-    % Syncopated 3-over-4 rhythm!
-    <a' a''>4.\p\< <g' g''>4. <d' d''>4 |
-    % =====================================================================
+    % Rhodes Melody
+    a'4.\ff\staccato g'4.\staccato d'4\staccato |
+    g'1 |
+    % Applied tenuto slurred into staccato to the final two eighth notes!
+    g'4.\staccato f'4\staccato d'8\staccato c'8\tenuto( g'8\staccato) |
+    f'1 |
+  }
+}
 
-    % Measure 2 
-    % Caps off the crescendo at Mezzo-Piano (\mp)
-    <g' g''>1\mp |
-
-    % =====================================================================
-    % Measure 3 
-    % Texture thins out - reverted back to single notes!
-    g'4. f'4 d'8 c'8 g'8 |
-
-    % Measure 4 
-    % Rings out for the full 4 beats as a single note!
-    f'1\< |
-    % =====================================================================
+% --- DEDICATED CLAVINET STAFF ---
+clavinetPart = {
+  \clef treble
+  \set Staff.instrumentName = #"Clavinet"
+  \set Staff.shortInstrumentName = #"Clav."
+  
+  \time 4/4
+  % Rest during the creepy intro (Staff will be hidden)
+  R1*3 |
+  
+  \time 5/4
+  % Rest during trumpet sweep (Staff will be hidden)
+  R4*5 |
+  
+  \time 4/4
+  % Rest during the two-bar funk intro
+  R1*2 |
+  
+  \repeat volta 2 {
+    \set Staff.midiInstrument = #"clavinet"
+    % RELAXED MUZZLE: Capped at 25% max volume in MIDI
+    \set Staff.midiMaximumVolume = #0.25 
+    \set Staff.midiMinimumVolume = #0.0
+    
+    % Bar 1: Standard Gm7 pattern
+    g8\pp\staccato^\markup { \box \bold "Clavinet" } d'8\staccato <f' bes'>8\staccato g8\staccato d'8\staccato <f' bes'>8\staccato d'8\staccato g8\staccato |
+    
+    % Bar 2: Doubling walking Bassline
+    g8\staccato g8\staccato bes8\staccato bes8\staccato c'8\staccato c'8\staccato des'8\tenuto( d'8\staccato) |
+    
+    % Bar 3: Bb6/9 Pattern
+    bes8\staccato f'8\staccato <g' d''>8\staccato bes8\staccato f'8\staccato <g' d''>8\staccato f'8\staccato bes8\staccato |
+    
+    % Bar 4: Doubling Turnaround Bassline
+    g'8\tenuto( f'8\staccato) d'8\staccato des'8\staccato c'8\tenuto( d'8\staccato) bes8\staccato g8\staccato |
   }
 }
 
 leftHand = {
+  \clef treble 
+  \time 4/4
+
+  % --- SECTION 1: CREEPY ---
+  \set Staff.instrumentName = #"Rhodes / Bass"
+  \set Staff.shortInstrumentName = #"Rho."
+  \set Staff.midiInstrument = #"electric piano 1"
+  
+  % Bar 1
+  <c'~ e'~ gis'>4\ppp\sustainOn^\markup { \box \bold "Rhodes" } <c' e'~ g'~>4 <b e'~ g'>4 <bes e'>4\sustainOff |
+  
+  % Bar 2
+  a'4( a4)~ <a c'>4~ <a c' ees'>4~ |
+  
+  % Bar 3
+  <a c' ees' g'>1\fermata | 
+  
+  % --- SECTION 1B: DOUBLE TRUMPET SWEEP (BAR 4) ---
+  \time 5/4
+  \set Staff.midiInstrument = #"trumpet"
+  
+  % MAGIC: Cap bottom sweep Open Trumpet to 70% 
+  \set Staff.midiMaximumVolume = #0.7
+  \set Staff.midiMinimumVolume = #0.0
+  
+  <<
+    {
+      f'8\ppp\staccatissimo\marcato^\markup { \box \bold "Trump 2 + DX7" } f8\tenuto\marcato g'8\staccatissimo\marcato 
+      bes16\tenuto( c'16\staccato) e'16\tenuto( f'16\staccato) 
+      des'16\tenuto( d'16\staccato) f'16\staccato e'16\staccato 
+      
+      \tag #'print {
+        g'16\staccato c'16\staccato bes16\staccato g16\staccato r8 |
+      }
+      \tag #'midi {
+        \tempo 4 = 85 g'16\staccato
+        \tempo 4 = 70 c'16\staccato 
+        \tempo 4 = 55 bes16\staccato
+        \tempo 4 = 40 g16\staccato
+        \tempo 4 = 90 r8 |
+      }
+    }
+    \tag #'midi {
+      \new Staff {
+        \set Staff.midiInstrument = #"electric piano 2"
+        % MAGIC: Cap bottom sweep hidden DX7 to 70%
+        \set Staff.midiMaximumVolume = #0.7
+        \set Staff.midiMinimumVolume = #0.0
+        
+        f'8\ppp\staccatissimo\marcato f8\tenuto\marcato g'8\staccatissimo\marcato 
+        bes16\tenuto( c'16\staccato) e'16\tenuto( f'16\staccato) 
+        des'16\tenuto( d'16\staccato) f'16\staccato e'16\staccato 
+        g'16\staccato c'16\staccato bes16\staccato g16\staccato r8 |
+      }
+    }
+  >>
+  
   \clef bass
+
+  % --- SECTION 2: FUNKY ---
   \time 4/4
-
-  % Section 1 Left Hand 
-  R1 | % Measure 1: Rest while the massive dissonant chord drops
-  R1 | % Measure 2: Bass removed, leaving right hand exposed
-  R1 | % Measure 3: Rest without the fermata hold notation
+  \set Staff.shortInstrumentName = #"Bass"
   
-  % --- COMBINED BARS 4 & 5 (Now 6/4 Time) ---
-  \time 6/4
-  R1*6/4 | % Measure 4 (visually): 6 total beats of rest to match the right hand's shortened measure
-
-  % --- PRE-FUNKY BASS PICKUP (2 Bars) ---
-  \time 4/4
-  % Measure 5 (visually): Two half notes tied across the barline
-  g,2\mp g,2~ | 
-
-  % chromatic walkdown with legato slurs removed for a punchier feel
-  g,4 ges8\tenuto g8\staccato des8\tenuto d8\staccato bes,8\tenuto b,8\staccato |
+  % MAGIC: Keep Bass at 100% Volume Ceiling
+  \set Staff.midiMaximumVolume = #1.0
+  \set Staff.midiMinimumVolume = #0.5
   
-  % Looping the last four measures 2 times total (1 initial play + 1 repeat)
+  << 
+    { 
+      \set Staff.midiInstrument = #"electric bass (finger)"
+      s4. bes,4.\staccato bes,8\staccato bes,8\staccato 
+    } 
+    \\ 
+    % Bass hits bumped to \fff
+    { g,1\fff_\markup { \box \bold "Electric Bass" } } 
+  >> | 
+
+  g,4\staccato ges8\tenuto g8\staccato des8\tenuto d8\staccato bes,8\tenuto b,8\staccato |
+  
   \repeat volta 2 {
-    % =====================================================================
-    % Measure 1 (The 4th to last bar of song)
-    % Sub-bass removed completely to let the main bassline punch through!
-    bes,4\staccato bes,8( g,4) r8 c8 d8 |
-    % =====================================================================
-
-    % =====================================================================
-    % Measure 2 (The 3rd to last bar of song)
-    % Sub-bass drone removed, exposing the punchy ascending 8th-note walk-up!
-    g,8\staccato g,8\staccato bes,8 bes,8 c8 c8 des8 d8 |
-    % =====================================================================
-
-    % =====================================================================
-    % Measure 3 (The 2nd to last bar of song)
-    % Lower Voice RESTORED to a deep, heavy B-flat sub-rumble!
+    \set Staff.midiInstrument = #"electric bass (finger)"
+    
+    % Bass dynamics pushed to \fff
+    bes,4\fff\staccato bes,8( g,4.) c8 d8\staccato |
+    
+    g,8\staccato g,8\staccato bes,8\staccato bes,8\staccato c8\staccato c8\staccato des8\tenuto( d8\staccato) |
     <<
-      % Upper Voice: The syncopated hits (stems will point up)
-      { r4 bes,8\mp bes,4 bes,4. } 
+      { r4 bes,8\fff bes,4 bes,4. } 
       \\ 
-      % Lower Voice: The deep B-flat sub-rumble!
-      { bes,,1\pp }
+      { bes,,1\ff } 
     >> |
-    % =====================================================================
-
-    % =====================================================================
-    % Measure 4 (The final bar of song): Turnaround riff
-    g8\mp\<\tenuto( f8\staccato) d8 des8 c8\tenuto( d8\staccato) bes,8 g,8 |
-    % =====================================================================
+    
+    % Turnaround pushed to \fff
+    g8\fff\tenuto( f8\staccato) d8 des8 c8\tenuto( d8\staccato) bes,8 g,8 |
   }
 }
 
-% --- SCORE 1: For the visual sheet music (keeps the repeat signs clean and 8ths straight) ---
+% --- SCORE 1: For the visual sheet music ---
 \score {
   \keepWithTag #'print
-  \new PianoStaff <<
+  \new StaffGroup <<
     \new Staff = "right" \rightHand
+    \new Staff = "clav" \clavinetPart
     \new Staff = "left" \leftHand
   >>
   \layout { 
     \context {
+      \Staff
+      \RemoveEmptyStaves
+      \override VerticalAxisGroup.remove-first = ##t
+    }
+    \context {
       \Score
-      % --- Horizontal Spacing Fix ---
-      % Forces LilyPond to calculate spacing based on 16th notes, un-cramping the measures
       \override SpacingSpanner.base-shortest-duration = #(ly:make-moment 1/16)
-      
-      % --- Cautionary Time Signature Fix ---
-      % Prevents the time signature from printing twice if a measure breaks across lines
       \override TimeSignature.break-visibility = #end-of-line-invisible
     }
   }
 }
 
-% --- SCORE 2: For the MIDI playback (forces the repeats to play and applies the tempo drop) ---
+% --- SCORE 2: For the MIDI playback ---
 \score {
   \keepWithTag #'midi
   \unfoldRepeats {
-    \new PianoStaff <<
+    \new StaffGroup <<
       \new Staff = "right" \rightHand
+      \new Staff = "clav" \clavinetPart
       \new Staff = "left" \leftHand
     >>
   }
-  \midi { }
+  \midi { 
+    \context {
+      \Score
+      midiChannelMapping = #'instrument
+    }
+  }
 }
