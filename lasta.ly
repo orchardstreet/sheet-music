@@ -32,16 +32,16 @@ rightHand = {
   \set Staff.midiMaximumVolume = #0.7
   \set Staff.midiMinimumVolume = #0.0
   
-  \tempo "Creepy" 4 = 114 
+  \tempo "Creepy" 4 = 100 
   
   % Bar 1: Swell from \mp to \mf just for this bar
   gis'4\mp\<\staccato\marcato^\markup { \box \bold "Muted Trumpet" } g'2 e'4\mf |
   
-  % Bar 2: Drop back to \mp and do a second, separate swell
-  a'4\mp\<\staccato\marcato a4( c'4 ees'4\mf) |
+  % Bar 2: Drop back to \mp and build all the way to Bar 3
+  a'4\mp\<\staccato\marcato a4( c'4 ees'4) |
   
-  % Bar 3: Sudden drop back to \mp on the hold
-  g'1\fermata\mp | 
+  % Bar 3: Arrive at \mf on the fermata hold
+  g'1\fermata\mf | 
   
   \break % --- FORCED LINE BREAK 1 ---
   
@@ -98,7 +98,7 @@ rightHand = {
   \set Staff.midiMaximumVolume = #1.0
   \set Staff.midiMinimumVolume = #0.2
   
-  \tempo "Funky" 4 = 140
+  \tempo "Funky" 4 = 130
   f'4\ff^\markup { \box \bold "Rhodes" }~ <bes~ f'>4 <bes~ g'~>4 <bes f' g'>4~ | 
   << { <bes f' g'>1 } { s2.\< s4\! } >> | 
 
@@ -165,11 +165,11 @@ leftHand = {
   % Bar 1: Rhodes swells from \ppp to \p
   <c'~ e'~ gis'>4\ppp\<\sustainOn^\markup { \box \bold "Rhodes" } <c' e'~ g'~>4 <b e'~ g'>4 <bes e'>4\p\sustainOff |
   
-  % Bar 2: Drop back to \ppp and do a second, separate swell
-  a'4\ppp\<( a4)~ <a c'>4~ <a c' ees'>4\p~ |
+  % Bar 2: Drop back to \ppp and build all the way to Bar 3
+  a'4\ppp\<( a4)~ <a c'>4~ <a c' ees'>4~ |
   
-  % Bar 3: Sudden drop back to \ppp on the hold
-  <a c' ees' g'>1\fermata\ppp | 
+  % Bar 3: Arrive at \mf on the fermata hold
+  <a c' ees' g'>1\fermata\mf | 
   
   % --- SECTION 1B: DOUBLE TRUMPET SWEEP (BAR 4) ---
   \time 5/4
