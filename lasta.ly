@@ -98,7 +98,7 @@ rightHand = {
   \set Staff.midiMaximumVolume = #1.0
   \set Staff.midiMinimumVolume = #0.2
   
-  \tempo "Funky" 4 = 135
+  \tempo "Funky" 4 = 140
   f'4\ff^\markup { \box \bold "Rhodes" }~ <bes~ f'>4 <bes~ g'~>4 <bes f' g'>4~ | 
   << { <bes f' g'>1 } { s2.\< s4\! } >> | 
 
