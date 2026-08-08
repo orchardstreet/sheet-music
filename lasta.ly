@@ -23,7 +23,7 @@ rightHand = {
   \set Score.midiMinimumVolume = #0.2
   \set Score.midiMaximumVolume = #1.0
   
-  % --- SECTION 1: CREEPY ---
+  % --- SECTION 1: INTRO ---
   \set Staff.instrumentName = #"Muted Trumpet"
   \set Staff.shortInstrumentName = #"Mut.Trp."
   
@@ -38,8 +38,7 @@ rightHand = {
   R1 |
   R1 |
   
-  % Bar 3 (Original Bar 1 - The Crash) - Just the word to set the mood!
-  \tempo "Creepy"
+  % Bar 3 (Original Bar 1 - The Crash)
   gis'4.\mp\<^\markup { \box \bold "Muted Trumpet" } g'4. e'4\mf |
   
   % Bar 4
@@ -118,7 +117,7 @@ clavinetPart = {
   \set Staff.shortInstrumentName = #"Clav."
   
   \time 4/4
-  % Resting for 5 bars (2 for solo intro, 3 for creepy section)
+  % Resting for 5 bars (2 for solo intro, 3 for crash section)
   R1*5 |
   
   \time 8/4
@@ -162,8 +161,8 @@ leftHand = {
   % Bar 2: Starting C#, expanding upwards, cascading down, and dropping to C# (half-step approach from above)!
   cis'8\mf aes'8 f''8 dis'''8 cis'''8 gis''8 f''8 cis''8 |
   
-  % Bar 3 (Original Bar 1 - The Crash)
-  <c'~ e'~ gis'>4.\ppp\< <c' e'~ g'~>4. <b e'~ g'>8 <bes e'>8\p |
+  % Bar 3 (Original Bar 1 - The Crash) "E" is now tied from the 3rd chord into the final upbeat!
+  <c'~ e'~ gis'>4.\ppp\< <c' e' g'~>4. <e'~ g'>8 e'8\p |
   
   % Bar 4
   a'4\ppp\<( a4)~ <a c'>4~ <a c' ees'>4~ |
@@ -286,16 +285,16 @@ drumPart = \drummode {
       <<
         {
           <cymc hhc>4\f^\markup { \italic "Crash 1st x only" } hhc4\mf hhc4 hhc4 | 
-          hhc4 hhc4 hhc4 r8 hhc8\mf |
+          hhc4 hhc4 r2 | % <--- Bar 2 now matches Bar 4!
           hhc4 hhc4 hhc4 hhc4 |
-          hhc4 hhc4 r2 | 
+          hhc4 hhc4 r2 | % <--- Bar 4
         }
         \\
         {
           bd4\f r4 sn4\mf r4 |
+          bd4\f r4 sn8\mf ss8 sn8 ss8 | % <--- Bar 2 rim-click fill!
           bd4\f r4 sn4\mf r4 |
-          bd4\f r4 sn4\mf r4 |
-          bd4\f r4 sn8\mf ss8 sn8 ss8 |
+          bd4\f r4 sn8\mf ss8 sn8 ss8 | % <--- Bar 4 rim-click fill!
         }
       >>
     }
@@ -307,14 +306,14 @@ drumPart = \drummode {
     <<
       {
         <cymc hhc>4\f hhc4\mf hhc4 hhc4 | 
-        hhc4 hhc4 hhc4 r8 hhc8\mf |
+        hhc4 hhc4 r2 | 
         hhc4 hhc4 hhc4 hhc4 |
         hhc4 hhc4 r2 | 
       }
       \\
       {
         bd4\f r4 sn4\mf r4 |
-        bd4\f r4 sn4\mf r4 |
+        bd4\f r4 sn8\mf ss8 sn8 ss8 |
         bd4\f r4 sn4\mf r4 |
         bd4\f r4 sn8\mf ss8 sn8 ss8 |
       }
@@ -325,14 +324,14 @@ drumPart = \drummode {
       <<
         {
           hhc4\mf hhc4\mf hhc4 hhc4 | 
-          hhc4 hhc4 hhc4 r8 hhc8\mf |
+          hhc4 hhc4 r2 | 
           hhc4 hhc4 hhc4 hhc4 |
           hhc4 hhc4 r2 | 
         }
         \\
         {
           bd4\f r4 sn4\mf r4 |
-          bd4\f r4 sn4\mf r4 |
+          bd4\f r4 sn8\mf ss8 sn8 ss8 |
           bd4\f r4 sn4\mf r4 |
           bd4\f r4 sn8\mf ss8 sn8 ss8 |
         }
