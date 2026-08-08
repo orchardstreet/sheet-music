@@ -5,7 +5,7 @@
   composer = "William Lupinacci"
 }
 
-% --- NEW: Layout and Page Formatting ---
+% --- Layout and Page Formatting ---
 \paper {
   top-margin = 15\mm
   bottom-margin = 15\mm
@@ -27,29 +27,34 @@ rightHand = {
   \set Staff.instrumentName = #"Muted Trumpet"
   \set Staff.shortInstrumentName = #"Mut.Trp."
   
-  % Bar 1-3: Muted Trumpet right from the start! Cap at 70% (Boosted 20%)
   \set Staff.midiInstrument = #"muted trumpet"
-  \set Staff.midiMaximumVolume = #0.7
+  \set Staff.midiMaximumVolume = #0.3
   \set Staff.midiMinimumVolume = #0.0
   
   \tempo "Creepy" 4 = 100 
   
-  % Bar 1: Swell from \mp to \mf just for this bar
-  gis'4\mp\<\staccato\marcato^\markup { \box \bold "Muted Trumpet" } g'2 e'4\mf |
+  % Bar 1: Ascending C-G-B, Octave up B-D, landing on A (eighth note) with a hard quarter rest!
+  c'8\p\<^\markup { \box \bold "Muted Trumpet" } g'8 b'8 b''8\f d'''8 a''8 r4 |
   
-  % Bar 2: Drop back to \mp and build all the way to Bar 3
-  a'4\mp\<\staccato\marcato a4( c'4 ees'4) |
+  % Bar 2: Starting C#, expanding upwards, cascading down, and dropping to C# (half-step approach from above)!
+  cis'8\mf aes'8 f''8 dis'''8 cis'''8 gis''8 f''8 cis''8 |
   
-  % Bar 3: Arrive at \mf on the fermata hold
+  % Bar 3 (Original Bar 1 - The Crash)
+  gis'4.\mp\< g'4. e'4\mf |
+  
+  % Bar 4
+  a'4\mp\<( a4 c'4 ees'4) |
+  
+  % Bar 5
   g'1\fermata\mf | 
   
   \break % --- FORCED LINE BREAK 1 ---
   
-  % --- SECTION 1B: TRUMPET + DX7 SWEEP (BAR 4) ---
-  \time 5/4
+  % --- SECTION 1B: TRUMPET + DX7 SWEEP (BAR 6) ---
+  % A perfect 8/4 measure!
+  \time 8/4
   \ottava #1
   
-  % Mute comes OUT! Switch back to Open Trumpet, capped at 70%
   \set Staff.midiInstrument = #"trumpet"
   \set Staff.midiMaximumVolume = #0.7
   \set Staff.midiMinimumVolume = #0.0
@@ -59,30 +64,18 @@ rightHand = {
       f''8\ppp\staccatissimo\marcato^\markup { \box \bold "Open Trumpet 1 + DX7" } f'8\tenuto\marcato g''8\staccatissimo\marcato 
       bes'16\tenuto( c''16\staccato) e''16\tenuto( f''16\staccato) 
       des''16\tenuto( d''16\staccato) f''16\tenuto( e''16\staccato) 
-      
-      \tag #'print {
-        g''16\tenuto(^\markup { \bold \italic "poco a poco rit." } c''16\staccato) 
-        bes'16\tenuto( g'16\staccato) r8 |
-      }
-      \tag #'midi {
-        \tempo 4 = 85 g''16\tenuto(
-        \tempo 4 = 70 c''16\staccato) 
-        \tempo 4 = 55 bes'16\tenuto(
-        \tempo 4 = 40 g'16\staccato)
-        \tempo 4 = 100 r8 |
-      }
+      g''16\tenuto( c''16\staccato) bes'16\tenuto( g'16\staccato) r2. r8 |
     }
     \tag #'midi {
       \new Staff {
         \set Staff.midiInstrument = #"electric piano 2"
-        % MAGIC: Cap hidden DX7 volume to 70%
         \set Staff.midiMaximumVolume = #0.7
         \set Staff.midiMinimumVolume = #0.0
         
         f''8\ppp\staccatissimo\marcato f'8\tenuto\marcato g''8\staccatissimo\marcato 
-        bes'16\tenuto( c''16\staccato) e''16\tenuto( f''16\staccato) 
-        des''16\tenuto( d''16\staccato) f''16\tenuto( e''16\staccato) 
-        g''16\tenuto( c''16\staccato) bes'16\tenuto( g'16\staccato) r8 |
+        bes16\tenuto( c'16\staccato) e'16\tenuto( f'16\staccato) 
+        des'16\tenuto( d'16\staccato) f'16\tenuto( e'16\staccato) 
+        g'16\tenuto( c'16\staccato) bes16\tenuto( g16\staccato) r2. r8 |
       }
     }
   >>
@@ -102,33 +95,30 @@ rightHand = {
   f'4\ff^\markup { \box \bold "Rhodes" }~ <bes~ f'>4 <bes~ g'~>4 <bes f' g'>4~ | 
   << { <bes f' g'>1 } { s2.\< s4\! } >> | 
 
-  \repeat volta 2 {
-    % Removed \staccato from the d'4 so it slurs smoothly!
-    a'4.\ff\staccato g'4.\staccato d'4( |
+  \repeat volta 4 {
+    a'8\ff r4 g'8 r4 d'4( |
     g'1) |
-    g'4.\staccato f'4\staccato d'8\staccato c'8\tenuto( g'8\staccato) |
-    f'1 |
+    g'8 r4 f'8 r8 d'8( c'8 g'8 |
+    f'1) |
   }
 }
 
-% --- DEDICATED CLAVINET STAFF ---
 clavinetPart = {
   \clef treble
   \set Staff.instrumentName = #"Clavinet"
   \set Staff.shortInstrumentName = #"Clav."
   
   \time 4/4
-  R1*3 |
+  % Resting for 5 bars (2 for solo intro, 3 for creepy section)
+  R1*5 |
   
-  \time 5/4
-  R4*5 |
+  \time 8/4
+  R4*8 |
   
   \time 4/4
   
-  % Clavinet enters here and mirrors the Bass (transposed down one octave!)
   \set Staff.midiInstrument = #"clavinet"
-  % RELAXED MUZZLE: Capped at 25% max volume in MIDI
-  \set Staff.midiMaximumVolume = #0.25 
+  \set Staff.midiMaximumVolume = #0.35 
   \set Staff.midiMinimumVolume = #0.0
   
   << 
@@ -141,14 +131,10 @@ clavinetPart = {
 
   g,4\staccato ges8\tenuto g8\staccato des8\tenuto d8\staccato bes,8\tenuto b,8\staccato |
   
-  \repeat volta 2 {
-    % Back to original octave for the main groove
+  \repeat volta 4 {
     g8\pp\staccato d'8\staccato <f' bes'>8\staccato g8\staccato d'8\staccato <f' bes'>8\staccato d'8\staccato g8\staccato |
-    
     g8\staccato g8\staccato bes8\staccato bes8\staccato c'8\staccato c'8\staccato des'8\tenuto( d'8\staccato) |
-    
     bes8\staccato f'8\staccato <g' d''>8\staccato bes8\staccato f'8\staccato <g' d''>8\staccato f'8\staccato bes8\staccato |
-    
     g8\tenuto( f8\staccato) d8\tenuto( des8\staccato) c8\tenuto( d8\staccato) bes8\tenuto( g8\staccato) |
   }
 }
@@ -157,24 +143,25 @@ leftHand = {
   \clef treble 
   \time 4/4
 
-  % --- SECTION 1: CREEPY ---
   \set Staff.instrumentName = #"Rhodes / Bass"
   \set Staff.shortInstrumentName = #"Rho."
   \set Staff.midiInstrument = #"electric piano 1"
   
-  % Bar 1: Rhodes swells from \ppp to \p
-  <c'~ e'~ gis'>4\ppp\<\sustainOn^\markup { \box \bold "Rhodes" } <c' e'~ g'~>4 <b e'~ g'>4 <bes e'>4\p\sustainOff |
+  % Bar 1 & 2 (Intro) - Fully stripped out to let the trumpet solo breathe
+  R1 |
+  R1 |
   
-  % Bar 2: Drop back to \ppp and build all the way to Bar 3
+  % Bar 3 (Original Bar 1 - The Crash)
+  <c'~ e'~ gis'>4.\ppp\<^\markup { \box \bold "Rhodes" } <c' e'~ g'~>4. <b e'~ g'>8 <bes e'>8\p |
+  
+  % Bar 4
   a'4\ppp\<( a4)~ <a c'>4~ <a c' ees'>4~ |
   
-  % Bar 3: Arrive at \mf on the fermata hold
+  % Bar 5
   <a c' ees' g'>1\fermata\mf | 
   
-  % --- SECTION 1B: DOUBLE TRUMPET SWEEP (BAR 4) ---
-  \time 5/4
+  \time 8/4
   \set Staff.midiInstrument = #"trumpet"
-  
   \set Staff.midiMaximumVolume = #0.7
   \set Staff.midiMinimumVolume = #0.0
   
@@ -183,17 +170,7 @@ leftHand = {
       f'8\ppp\staccatissimo\marcato^\markup { \box \bold "Trump 2 + DX7" } f8\tenuto\marcato g'8\staccatissimo\marcato 
       bes16\tenuto( c'16\staccato) e'16\tenuto( f'16\staccato) 
       des'16\tenuto( d'16\staccato) f'16\tenuto( e'16\staccato) 
-      
-      \tag #'print {
-        g'16\tenuto( c'16\staccato) bes16\tenuto( g16\staccato) r8 |
-      }
-      \tag #'midi {
-        \tempo 4 = 85 g'16\tenuto(
-        \tempo 4 = 70 c'16\staccato) 
-        \tempo 4 = 55 bes16\tenuto(
-        \tempo 4 = 40 g16\staccato)
-        \tempo 4 = 100 r8 |
-      }
+      g'16\tenuto( c'16\staccato) bes16\tenuto( g16\staccato) r2. r8 |
     }
     \tag #'midi {
       \new Staff {
@@ -204,14 +181,13 @@ leftHand = {
         f'8\ppp\staccatissimo\marcato f8\tenuto\marcato g'8\staccatissimo\marcato 
         bes16\tenuto( c'16\staccato) e'16\tenuto( f'16\staccato) 
         des'16\tenuto( d'16\staccato) f'16\tenuto( e'16\staccato) 
-        g'16\tenuto( c'16\staccato) bes16\tenuto( g16\staccato) r8 |
+        g'16\tenuto( c'16\staccato) bes16\tenuto( g16\staccato) r2. r8 |
       }
     }
   >>
   
   \clef bass
 
-  % --- SECTION 2: FUNKY ---
   \time 4/4
   \set Staff.shortInstrumentName = #"Bass"
   
@@ -229,29 +205,92 @@ leftHand = {
 
   g,4\staccato ges8\tenuto g8\staccato des8\tenuto d8\staccato bes,8\tenuto b,8\staccato |
   
-  \repeat volta 2 {
+  \repeat volta 4 {
     \set Staff.midiInstrument = #"electric bass (finger)"
     
     bes,4\fff\staccato bes,8( g,4.) c8 d8\staccato |
-    
     g,8\staccato g,8\staccato bes,8\staccato bes,8\staccato c8\staccato c8\staccato des8\tenuto( d8\staccato) |
     <<
       { r4 bes,8\fff bes,4 bes,4. } 
       \\ 
       { bes,,1\ff } 
     >> |
-    
     g8\fff\tenuto( f8\staccato) d8\tenuto( des8\staccato) c8\tenuto( d8\staccato) bes,8\tenuto( g,8\staccato) |
+  }
+}
+
+% --- DEDICATED DRUM TRACK ---
+drumPart = \drummode {
+  \set DrumStaff.instrumentName = #"Drums"
+  \set DrumStaff.shortInstrumentName = #"Dr."
+  
+  \set DrumStaff.midiMaximumVolume = #0.2
+  \set DrumStaff.midiMinimumVolume = #0.0
+  
+  \time 4/4
+  
+  % Bar 1 & 2 (Intro): Full measures of rest for the trumpet solo
+  R1 |
+  R1 |
+  
+  % Bar 3: Split voices! Cymbals dropped to \f and alternated to prevent MIDI choking (bleed effect). Toms stay loud at \ff.
+  <<
+    { r2 r8 cymc8\f cyms8 cymc8 }
+    \\
+    { r2 r8 tomh8\ff tommh8 toml8 }
+  >> |
+  
+  % Bar 4 & 5: Tense silence, ending in two massive stick clicks!
+  R1 |
+  r2 hhc4\fff hhc4 |
+  
+  % Bar 6 (8/4): The massive snare fill that cuts out early for total silence!
+  \time 8/4
+  sn8\ff sn8 sn8 
+  sn16 sn16 sn16 sn16  sn16 sn16 sn16 sn16  sn16 sn16 sn16 sn16 
+  \tuplet 3/2 { sn8 sn8 sn8 } 
+  sn8 r2 |
+  
+  \time 4/4
+  
+  \set DrumStaff.midiMaximumVolume = #0.2
+  \set DrumStaff.midiMinimumVolume = #0.1
+  
+  <cymc hhc>4\f hhc4\mf hhc4 hhc4 |
+  hhc4 hhc4 hhc4 hhc4 |
+  
+  \set DrumStaff.midiMaximumVolume = #0.2
+  \set DrumStaff.midiMinimumVolume = #0.1
+  
+  \repeat volta 4 {
+    <<
+      {
+        hhc4\mf hhc4 hhc4 hhc4 |
+        hhc4 hhc4 hhc4 r8 hhc8\mf |
+        hhc4 hhc4 hhc4 hhc4 |
+        hhc4 hhc4 r2 | % <--- Hi-hat is scraped (silenced) for the fill!
+      }
+      \\
+      {
+        bd4\f r4 sn4\mf r4 |
+        bd4\f r4 sn4\mf r4 |
+        bd4\f r4 sn4\mf r4 |
+        bd4\f r4 sn8\mf ss8 sn8 ss8 | % <--- Snare, rim hit, snare, rim hit
+      }
+    >>
   }
 }
 
 % --- SCORE 1: For the visual sheet music ---
 \score {
   \keepWithTag #'print
-  \new StaffGroup <<
-    \new Staff = "right" \rightHand
-    \new Staff = "clav" \clavinetPart
-    \new Staff = "left" \leftHand
+  <<
+    \new StaffGroup <<
+      \new Staff = "right" \rightHand
+      \new Staff = "clav" \clavinetPart
+      \new Staff = "left" \leftHand
+    >>
+    \new DrumStaff = "drums" \drumPart
   >>
   \layout { 
     \context {
@@ -271,10 +310,13 @@ leftHand = {
 \score {
   \keepWithTag #'midi
   \unfoldRepeats {
-    \new StaffGroup <<
-      \new Staff = "right" \rightHand
-      \new Staff = "clav" \clavinetPart
-      \new Staff = "left" \leftHand
+    <<
+      \new StaffGroup <<
+        \new Staff = "right" \rightHand
+        \new Staff = "clav" \clavinetPart
+        \new Staff = "left" \leftHand
+      >>
+      \new DrumStaff = "drums" \drumPart
     >>
   }
   \midi { 
