@@ -31,16 +31,16 @@ rightHand = {
   \set Staff.midiMaximumVolume = #0.3
   \set Staff.midiMinimumVolume = #0.0
   
-  \tempo "Creepy" 4 = 100 
+  % Establish the exact BPM at the very start of the track
+  \tempo 4 = 100 
   
-  % Bar 1: Ascending C-G-B, Octave up B-D, landing on A (eighth note) with a hard quarter rest!
-  c'8\p\<^\markup { \box \bold "Muted Trumpet" } g'8 b'8 b''8\f d'''8 a''8 r4 |
+  % Bar 1 & 2 (Intro) - Now played on Rhodes!
+  R1 |
+  R1 |
   
-  % Bar 2: Starting C#, expanding upwards, cascading down, and dropping to C# (half-step approach from above)!
-  cis'8\mf aes'8 f''8 dis'''8 cis'''8 gis''8 f''8 cis''8 |
-  
-  % Bar 3 (Original Bar 1 - The Crash)
-  gis'4.\mp\< g'4. e'4\mf |
+  % Bar 3 (Original Bar 1 - The Crash) - Just the word to set the mood!
+  \tempo "Creepy"
+  gis'4.\mp\<^\markup { \box \bold "Muted Trumpet" } g'4. e'4\mf |
   
   % Bar 4
   a'4\mp\<( a4 c'4 ees'4) |
@@ -51,6 +51,9 @@ rightHand = {
   \break % --- FORCED LINE BREAK 1 ---
   
   % --- SECTION 1B: TRUMPET + DX7 SWEEP (BAR 6) ---
+  % Update the margin label for this system!
+  \set Staff.shortInstrumentName = #"Op.Trp.1+DX7"
+  
   % A perfect 8/4 measure!
   \time 8/4
   \ottava #1
@@ -85,17 +88,23 @@ rightHand = {
   
   % --- SECTION 2: FUNKY ---
   \time 4/4
+  
+  % Switch label for the Funk Section
   \set Staff.shortInstrumentName = #"Rho."
   \set Staff.midiInstrument = #"electric piano 1"
   
   \set Staff.midiMaximumVolume = #1.0
   \set Staff.midiMinimumVolume = #0.2
   
+  % Reveal the tempo marking again for the funk section
   \tempo "Funky" 4 = 130
   f'4\ff^\markup { \box \bold "Rhodes" }~ <bes~ f'>4 <bes~ g'~>4 <bes f' g'>4~ | 
   << { <bes f' g'>1 } { s2.\< s4\! } >> | 
+  
+  \pageBreak % --- FORCED PAGE BREAK BEFORE REPEAT ---
 
   \repeat volta 4 {
+    \tempo "Funky" % Tempoless label to remind the players on Page 2!
     a'8\ff r4 g'8 r4 d'4( |
     g'1) |
     g'8 r4 f'8 r8 d'8( c'8 g'8 |
@@ -143,16 +152,18 @@ leftHand = {
   \clef treble 
   \time 4/4
 
-  \set Staff.instrumentName = #"Rhodes / Bass"
+  \set Staff.instrumentName = #"Rhodes" 
   \set Staff.shortInstrumentName = #"Rho."
   \set Staff.midiInstrument = #"electric piano 1"
   
-  % Bar 1 & 2 (Intro) - Fully stripped out to let the trumpet solo breathe
-  R1 |
-  R1 |
+  % Bar 1: Ascending C-G-B, Octave up B-D, landing on A (eighth note) with a hard quarter rest!
+  c'8\p\<^\markup { \box \bold "Rhodes" } g'8 b'8 b''8\f d'''8 a''8 r4 |
+  
+  % Bar 2: Starting C#, expanding upwards, cascading down, and dropping to C# (half-step approach from above)!
+  cis'8\mf aes'8 f''8 dis'''8 cis'''8 gis''8 f''8 cis''8 |
   
   % Bar 3 (Original Bar 1 - The Crash)
-  <c'~ e'~ gis'>4.\ppp\<^\markup { \box \bold "Rhodes" } <c' e'~ g'~>4. <b e'~ g'>8 <bes e'>8\p |
+  <c'~ e'~ gis'>4.\ppp\< <c' e'~ g'~>4. <b e'~ g'>8 <bes e'>8\p |
   
   % Bar 4
   a'4\ppp\<( a4)~ <a c'>4~ <a c' ees'>4~ |
@@ -160,14 +171,19 @@ leftHand = {
   % Bar 5
   <a c' ees' g'>1\fermata\mf | 
   
+  % --- SECTION 1B: TRUMPET + DX7 SWEEP (BAR 6) ---
   \time 8/4
+  
+  % Update the margin label for this system!
+  \set Staff.shortInstrumentName = #"Op.Trp.2+DX7"
+  
   \set Staff.midiInstrument = #"trumpet"
   \set Staff.midiMaximumVolume = #0.7
   \set Staff.midiMinimumVolume = #0.0
   
   <<
     {
-      f'8\ppp\staccatissimo\marcato^\markup { \box \bold "Trump 2 + DX7" } f8\tenuto\marcato g'8\staccatissimo\marcato 
+      f'8\ppp\staccatissimo\marcato^\markup { \box \bold "Open Trumpet 2 + DX7" } f8\tenuto\marcato g'8\staccatissimo\marcato 
       bes16\tenuto( c'16\staccato) e'16\tenuto( f'16\staccato) 
       des'16\tenuto( d'16\staccato) f'16\tenuto( e'16\staccato) 
       g'16\tenuto( c'16\staccato) bes16\tenuto( g16\staccato) r2. r8 |
@@ -189,7 +205,9 @@ leftHand = {
   \clef bass
 
   \time 4/4
-  \set Staff.shortInstrumentName = #"Bass"
+  
+  % Switch label back for the Funk Section
+  \set Staff.shortInstrumentName = #"Bass" 
   
   \set Staff.midiMaximumVolume = #1.0
   \set Staff.midiMinimumVolume = #0.5
@@ -224,12 +242,12 @@ drumPart = \drummode {
   \set DrumStaff.instrumentName = #"Drums"
   \set DrumStaff.shortInstrumentName = #"Dr."
   
-  \set DrumStaff.midiMaximumVolume = #0.2
+  \set DrumStaff.midiMaximumVolume = #0.12
   \set DrumStaff.midiMinimumVolume = #0.0
   
   \time 4/4
   
-  % Bar 1 & 2 (Intro): Full measures of rest for the trumpet solo
+  % Bar 1 & 2 (Intro): Full measures of rest for the solo
   R1 |
   R1 |
   
