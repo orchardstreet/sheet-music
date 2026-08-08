@@ -280,22 +280,64 @@ drumPart = \drummode {
   \set DrumStaff.midiMaximumVolume = #0.2
   \set DrumStaff.midiMinimumVolume = #0.1
   
-  \repeat volta 4 {
+  % --- VISUAL SCORE (Prints standard 4-bar repeat with text instruction) ---
+  \tag #'print {
+    \repeat volta 4 {
+      <<
+        {
+          <cymc hhc>4\f^\markup { \italic "Crash 1st x only" } hhc4\mf hhc4 hhc4 | 
+          hhc4 hhc4 hhc4 r8 hhc8\mf |
+          hhc4 hhc4 hhc4 hhc4 |
+          hhc4 hhc4 r2 | 
+        }
+        \\
+        {
+          bd4\f r4 sn4\mf r4 |
+          bd4\f r4 sn4\mf r4 |
+          bd4\f r4 sn4\mf r4 |
+          bd4\f r4 sn8\mf ss8 sn8 ss8 |
+        }
+      >>
+    }
+  }
+  
+  % --- MIDI PLAYBACK (Splits into 1 pass with crash + 3 passes without crash) ---
+  \tag #'midi {
+    % 1st Pass (With Crash)
     <<
       {
-        hhc4\mf hhc4 hhc4 hhc4 |
+        <cymc hhc>4\f hhc4\mf hhc4 hhc4 | 
         hhc4 hhc4 hhc4 r8 hhc8\mf |
         hhc4 hhc4 hhc4 hhc4 |
-        hhc4 hhc4 r2 | % <--- Hi-hat is scraped (silenced) for the fill!
+        hhc4 hhc4 r2 | 
       }
       \\
       {
         bd4\f r4 sn4\mf r4 |
         bd4\f r4 sn4\mf r4 |
         bd4\f r4 sn4\mf r4 |
-        bd4\f r4 sn8\mf ss8 sn8 ss8 | % <--- Snare, rim hit, snare, rim hit
+        bd4\f r4 sn8\mf ss8 sn8 ss8 |
       }
     >>
+    
+    % Remaining 3 Passes (No Crash!)
+    \repeat volta 3 {
+      <<
+        {
+          hhc4\mf hhc4\mf hhc4 hhc4 | 
+          hhc4 hhc4 hhc4 r8 hhc8\mf |
+          hhc4 hhc4 hhc4 hhc4 |
+          hhc4 hhc4 r2 | 
+        }
+        \\
+        {
+          bd4\f r4 sn4\mf r4 |
+          bd4\f r4 sn4\mf r4 |
+          bd4\f r4 sn4\mf r4 |
+          bd4\f r4 sn8\mf ss8 sn8 ss8 |
+        }
+      >>
+    }
   }
 }
 
